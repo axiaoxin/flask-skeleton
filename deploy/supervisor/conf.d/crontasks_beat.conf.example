@@ -1,0 +1,12 @@
+[program:crontasks_beat]
+command=%(ENV_PROJECT_ROOT_PATH)s/deploy/venv/bin/celery beat -A crontasks --loglevel=INFO --pidfile=%(ENV_PROJECT_ROOT_PATH)s/deploy/supervisor/pids/%(program_name)s.pid
+environment=PYTHONPATH=%(ENV_PROJECT_ROOT_PATH)s:%(ENV_PROJECT_ROOT_PATH)s/app
+directory=%(ENV_PROJECT_ROOT_PATH)s/app/crontasks
+redirect_stderr=false
+stdout_logfile=%(ENV_PROJECT_ROOT_PATH)s/logs/%(program_name)s.log
+stderr_logfile=%(ENV_PROJECT_ROOT_PATH)s/logs/%(program_name)s.log
+autostart=true
+autorestart=true
+startsecs=10
+stopasgroup=true
+priority=999

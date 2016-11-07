@@ -1,0 +1,15 @@
+<ul>
+{% for doc in docs %}
+    <li>
+        <a href="{{ url_for("docs.doc", path=doc.path) }}">{{ doc.title }}</a>
+    {% if doc.meta.tags|length %}
+        | Tagged:
+        {% for doc_tag in doc.meta.tags %}
+            <a href="{{ url_for("docs.tag", tag=doc_tag) }}">{{ doc_tag }}</a>
+        {% endfor %}
+    {% endif %}
+    </li>
+{% else %}
+    <li>No doc.</li>
+{% endfor %}
+</ul>

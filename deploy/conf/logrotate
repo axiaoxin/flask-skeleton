@@ -1,0 +1,13 @@
+/data/log/flask-skeleton/*.log {
+    daily
+    rotate 30
+    sharedscripts
+    dateext
+    compress
+    delaycompress
+    missingok
+    create 644 root root
+    postrotate
+        /usr/bin/killall -HUP gunicorn
+    endscript
+}

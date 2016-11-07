@@ -1,0 +1,13 @@
+[program:crontasks_worker]
+command=%(ENV_PROJECT_ROOT_PATH)s/deploy/venv/bin/celery worker -A crontasks --loglevel=INFO --pidfile=%(ENV_PROJECT_ROOT_PATH)s/deploy/supervisor/pids/%(program_name)s.pid -n %(program_name)s@%%h
+environment=PYTHONPATH=%(ENV_PROJECT_ROOT_PATH)s:%(ENV_PROJECT_ROOT_PATH)s/app
+directory=%(ENV_PROJECT_ROOT_PATH)s/app/crontasks
+redirect_stderr=false
+stdout_logfile=%(ENV_PROJECT_ROOT_PATH)s/logs/%(program_name)s.log
+stderr_logfile=%(ENV_PROJECT_ROOT_PATH)s/logs/%(program_name)s.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs = 600
+stopasgroup=true
+priority=1000

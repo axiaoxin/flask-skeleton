@@ -1,0 +1,6 @@
+{% extends "docs/base.html" %}
+
+{% block content %}
+    <h2>{{ doc.title }}</h2>
+    {{ doc.html|safe }}
+{% endblock content %}

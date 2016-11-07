@@ -1,0 +1,8 @@
+{% extends "docs/base.html" %}
+
+{% block content %}
+    <h2>List of docs tagged <em>{{ tag }}</em></h2>
+    {% with docs=docs  %}
+        {% include "docs/_list.html" %}
+    {% endwith %}
+{% endblock content %}

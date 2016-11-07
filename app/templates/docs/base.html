@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Docs</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/topnav.css') }}">
+</head>
+<body>
+    <div class="topnav">
+        <a href="{{ url_for("docs.index") }}" class="active">Index</a>
+        <a href="{{ url_for("flasgger.apidocs") }}">apidocs</a>
+    </div>
+{% block content %}
+    <p>Default content to be displayed</p>
+{% endblock content %}
+</body>
+</html>
