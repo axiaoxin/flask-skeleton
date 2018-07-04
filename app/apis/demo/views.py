@@ -24,6 +24,8 @@ class Entry(BaseView):
         definitions:
           entry_body:
             type: object
+            required: [caller_id, caller_key, notify_method,
+                       send_to, title, content]
             properties:
               caller_id:
                 type: integer
@@ -51,6 +53,10 @@ class Entry(BaseView):
                 type: string
                 description: 通知消息内容
                 example: 你已被任命为CEO
+              async:
+                type: boolean
+                description: 使用异步任务发送
+                example: true
           response:
             type: object
             properties:
@@ -84,8 +90,14 @@ class Entry(BaseView):
         validator.allow_unknown = True
         if not validator.validate(data, validator_schemas.message_entry_data):
             return response(validator.errors, RetCode.PARAMS_ERROR)
-        task_id = handlers.handle_message(data)
-        return response({'task_id': task_id})
+
+        async = data.get('async', True)
+        if async is True:
+            task = handlers.handle_message(data)
+            return response({'task_id': task.id})
+        else:
+            retcode, result = handlers.notify(data)
+            return response(code=retcode, data=result)
 
 
 class NotifyTask(BaseView):
@@ -168,7 +180,6 @@ class NotifyStatus(BaseView):
 
 
 class Records(BaseView):
-
     def get(self, id=None):
         """查
         根据db主键id查询对应记录

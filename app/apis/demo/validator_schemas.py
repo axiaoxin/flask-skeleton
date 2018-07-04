@@ -43,4 +43,10 @@ message_entry_data = {
         'empty': False,
         'required': True,
     },
+
+    'async': {
+        'type': 'boolean',
+        'empty': False,
+        'required': False,
+    },
 }

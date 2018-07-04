@@ -12,8 +12,8 @@ def handle_message(data):
     if method_name not in ['send_email', 'send_sms']:
         method_name = 'other_method'
     task = notify.apply_async(args=[data], queue=method_name)
-    app_logger.debug('task_id:%r' % task.id)
-    return task.id
+    app_logger.debug(u'handle task:%r' % task.id)
+    return task
 
 
 @celery.task(bind=True)
@@ -25,7 +25,7 @@ def notify(self, data):
                      (notify_module.__name__, notify_method.__name__))
     if settings.FAKE_HANDLE_TASK:
         app_logger.info(u'fake handle message:%r' % data)
-        result = utils.do_fake_task()
+        result = utils.do_fake_task(result=(0, 'fake-result'))
     else:
         result = notify_method(data['send_to'], data['title'], data['content'])
     app_logger.debug(u'%r:notify complete:%r' % (self.request.id, result))
