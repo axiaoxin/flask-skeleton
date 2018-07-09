@@ -68,8 +68,7 @@ def init_logger(logger_name,
                 log_path=settings.LOG_PATH):
 
     formatter = logging.Formatter(
-        '[%(asctime)s] [%(process)d] [%(levelname)s] [%(request_id)s] %(message)s',  # noqa
-        '%Y-%m-%d %H:%M:%S')
+        '[%(asctime)s] [%(process)d] [%(levelname)s] [%(request_id)s] %(message)s')  # noqa
 
     if settings.LOG_IN_FILE:
         if settings.SPLIT_LOGFILE_BY_LEVEL:
