@@ -86,7 +86,7 @@ class Entry(BaseView):
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         '''
-        data = request.get_json()
+        data = request.get_json() or {}
         validator.allow_unknown = True
         if not validator.validate(data, validator_schemas.message_entry_data):
             return response(validator.errors, RetCode.PARAMS_ERROR)
