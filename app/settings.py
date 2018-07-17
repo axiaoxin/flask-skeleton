@@ -37,8 +37,6 @@ REQUEST_ID_KEY = config('REQUEST_ID_KEY', default='X-Request-ID')
 ####################
 
 LOG_PATH = config("LOG_PATH", default=os.path.join(PROJECT_ROOT_PATH, 'logs'))
-if not os.path.exists(LOG_PATH):
-    os.makedirs(LOG_PATH)
 LOG_LEVEL = config('LOG_LEVEL', default='debug')
 LOG_FUNC_CALL = config('LOG_FUNC_CALL', default=True, cast=bool)
 LOG_PEEWEE_SQL = config('LOG_PEEWEE_SQL', default=False, cast=bool)
