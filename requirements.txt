@@ -20,3 +20,5 @@ supervisor
 flasgger
 Flask-FlatPages
 flower
+
+pytest
