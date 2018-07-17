@@ -65,13 +65,15 @@ class RequestIDLogFilter(logging.Filter):
 def init_logger(logger_name,
                 logfile_name=settings.SERVICE_NAME,
                 logging_level=settings.LOG_LEVEL,
-                log_path=settings.LOG_PATH):
+                log_in_file=settings.LOG_IN_FILE,
+                log_path=settings.LOG_PATH,
+                split_logfile_by_level=settings.SPLIT_LOGFILE_BY_LEVEL):
 
     formatter = logging.Formatter(
         '[%(asctime)s] [%(process)d] [%(levelname)s] [%(request_id)s] %(message)s')  # noqa
 
-    if settings.LOG_IN_FILE:
-        if settings.SPLIT_LOGFILE_BY_LEVEL:
+    if log_in_file:
+        if split_logfile_by_level:
             logging.setLoggerClass(SplitLogger)
             logger = logging.getLogger(logger_name)
             level = logging.getLevelName(logging_level.upper())
