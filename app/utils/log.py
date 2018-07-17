@@ -63,9 +63,9 @@ class RequestIDLogFilter(logging.Filter):
 
 
 def init_logger(logger_name,
-                logfile_name=settings.SERVICE_NAME,
                 logging_level=settings.LOG_LEVEL,
                 log_in_file=settings.LOG_IN_FILE,
+                logfile_name=settings.SERVICE_NAME,
                 log_path=settings.LOG_PATH,
                 split_logfile_by_level=settings.SPLIT_LOGFILE_BY_LEVEL):
 
