@@ -3,4 +3,6 @@
 __pycache__/*
 celerybeat-schedule
 celerybeat.pid
-logs
+*.pid
+deploy/venv/*
+tests/.pytest_cache
