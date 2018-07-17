@@ -40,8 +40,7 @@ def get_support_keycase():
     return [i for i in dir(stringcase) if i.endswith('case')]
 
 
-def jsonify_(data):
-    keycase = settings.JSON_KEYCASE
+def jsonify_(data, keycase=settings.JSON_KEYCASE):
     if keycase:
         try:
             casefunc = getattr(stringcase, keycase)
