@@ -73,6 +73,9 @@ def init_logger(logger_name,
         '[%(asctime)s] [%(process)d] [%(levelname)s] [%(request_id)s] %(message)s')  # noqa
 
     if log_in_file:
+        if not os.path.exists(log_path):
+            os.makedirs(log_path)
+            
         if split_logfile_by_level:
             logging.setLoggerClass(SplitLogger)
             logger = logging.getLogger(logger_name)
