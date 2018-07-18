@@ -6,3 +6,4 @@ celerybeat.pid
 *.pid
 deploy/venv/*
 tests/.pytest_cache
+logs/*.log*

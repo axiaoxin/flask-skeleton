@@ -36,11 +36,13 @@ REQUEST_ID_KEY = config('REQUEST_ID_KEY', default='X-Request-ID')
 # settings for log #
 ####################
 
+LOGGER_NAME = config('LOGGER_NAME', default='apiserver')
 LOG_PATH = config("LOG_PATH", default=os.path.join(PROJECT_ROOT_PATH, 'logs'))
 LOG_LEVEL = config('LOG_LEVEL', default='debug')
 LOG_FUNC_CALL = config('LOG_FUNC_CALL', default=True, cast=bool)
-LOG_PEEWEE_SQL = config('LOG_PEEWEE_SQL', default=False, cast=bool)
-LOG_IN_FILE = config('LOG_IN_FILE', default=False, cast=bool)
+LOG_PEEWEE_SQL = config('LOG_PEEWEE_SQL', default=DEBUG, cast=bool)
+LOG_IN_CONSOLE = config('LOG_IN_CONSOLE', default=DEBUG, cast=bool)
+LOG_IN_FILE = config('LOG_IN_FILE', default=True, cast=bool)
 SPLIT_LOGFILE_BY_LEVEL = config(
     'SPLIT_LOGFILE_BY_LEVEL', default=False, cast=bool)
 

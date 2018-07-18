@@ -62,10 +62,11 @@ class RequestIDLogFilter(logging.Filter):
         return log_record
 
 
-def init_logger(logger_name,
+def init_logger(logger_name=settings.LOGGER_NAME,
                 logging_level=settings.LOG_LEVEL,
+                log_in_console=settings.LOG_IN_CONSOLE,
                 log_in_file=settings.LOG_IN_FILE,
-                logfile_name=settings.SERVICE_NAME,
+                logfile_name=settings.LOGGER_NAME,
                 log_path=settings.LOG_PATH,
                 split_logfile_by_level=settings.SPLIT_LOGFILE_BY_LEVEL):
 
@@ -75,7 +76,6 @@ def init_logger(logger_name,
     if log_in_file:
         if not os.path.exists(log_path):
             os.makedirs(log_path)
-            
         if split_logfile_by_level:
             logging.setLoggerClass(SplitLogger)
             logger = logging.getLogger(logger_name)
@@ -111,22 +111,24 @@ def init_logger(logger_name,
             file_handler.addFilter(RequestIDLogFilter())
             logger.addHandler(file_handler)
 
-    logger = logging.getLogger(logger_name)
-    level = logging.getLevelName(logging_level.upper())
-    logger.setLevel(level)
-    console_handler = logging.StreamHandler()
-    console_handler.name = "console"
-    console_handler.setLevel(logging.DEBUG)
-    console_handler.setFormatter(formatter)
-    console_handler.addFilter(RequestIDLogFilter())
-    logger.addHandler(console_handler)
+    if log_in_console:
+        logger = logging.getLogger(logger_name)
+        level = logging.getLevelName(logging_level.upper())
+        logger.setLevel(level)
+        console_handler = logging.StreamHandler()
+        console_handler.name = "console"
+        console_handler.setLevel(logging.DEBUG)
+        console_handler.setFormatter(formatter)
+        console_handler.addFilter(RequestIDLogFilter())
+        logger.addHandler(console_handler)
 
     return logger
 
 
-app_logger = init_logger(settings.SERVICE_NAME)
+app_logger = init_logger()
 if settings.LOG_PEEWEE_SQL:
-    pw_logger = init_logger('peewee', logging_level='DEBUG')
+    pw_logger = init_logger('peewee', logging_level='DEBUG',
+                            log_in_file=True, logfile_name='peewee')
 
 
 def _capture_exception_for_sentry(log_func):
