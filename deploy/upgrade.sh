@@ -28,9 +28,9 @@ if [ -f $upgrade_file ]; then
     echo restarting all...
     $current_proj/deploy/admin.sh restart all
 
-    # delete old backup
+    # delete 7 days ago backup
     echo deleting old backup...
-    ls | grep `date '+%Y-%m-%d' --date '30 days ago'` | xargs rm -rf
+    find $proj_base_dir -maxdepth 1 -type d -name "$proj_name.*" -ctime +7 -exec rm -rf {} \;
 else
     echo no $upgrade_file
 fi
