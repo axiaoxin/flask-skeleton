@@ -60,4 +60,4 @@ def response(data=None, code=RetCode.SUCCESS, msg=None):
     else:
         result['msg'] = RetCodeMsg.get(code, '')
 
-    return jsonify_(result), code if code > 100 else 200
+    return jsonify_(result), code if 100 <= code < 600 else 200
