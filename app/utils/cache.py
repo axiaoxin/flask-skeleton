@@ -82,16 +82,28 @@ def cached_call(cached_over_ms=settings.CACHED_OVER_EXEC_MILLISECONDS,
 def get_redislock(name,
                   timeout=settings.REDIS_LOCK_TIMEOUT,
                   blocking_timeout=None):
-    ''' Useage:
+    ''' redis lock
+    :params name lock名称，构成key
+    :params timeout 锁超时时间，超过该时间自动解锁
+    :params blocking_timeout 为None表示无blocking，会一直等待直到拿到锁。
+      设置该时间后，会在在该时间后自动放弃拿锁
 
-    lock = get_redislock('print_arg:%s' % arg, blocking_timeout=1)
+    Useage:
+
+    lock = get_redislock('lockname', blocking_timeout=1)
+
+    with lock:
+        do_something
+
+    OR:
+
     if lock.acquire():
         try:
             do_something
         finally:
             lock.release()
-    else:
-        logger.warning('blocking')
+    elif lock.blocking_timeout is not None:
+        logger.warning('lock blocking timeout')
 
     '''
     key = 'lock:' + name
