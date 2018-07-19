@@ -5,15 +5,31 @@ import urlparse
 from functools import wraps
 
 from flask import request
-from redis.exceptions import ConnectionError
 
 import settings
+from services import redis
 from utils import get_func_name
 from utils.log import app_logger
-from services import redis
 
 
-def cached_call(over_ms=None,
+def _generate_key(namespace, tag, **kwargs):
+    prefix = 'cached_call'
+    if namespace == 'funcs':
+        key = ':'.join(
+            field
+            for field in
+            [prefix, namespace, tag, kwargs['funcname'], kwargs['params']]
+            if field)
+    elif namespace == 'views':
+        key = ':'.join(
+            field
+            for field in
+            [prefix, namespace, tag, kwargs['url_path'], kwargs['url_query']]
+            if field)
+    return key
+
+
+def cached_call(cached_over_ms=settings.CACHED_OVER_EXEC_MILLISECONDS,
                 expire=settings.CACHED_EXPIRE_SECONDS,
                 tag='',
                 namespace='views'):
@@ -24,44 +40,39 @@ def cached_call(over_ms=None,
         def wrapper(*func_args, **func_kwargs):
             if not settings.CACHED_CALL:
                 return func(*func_args, **func_kwargs)
-            try:
-                redis.info()
-            except ConnectionError:
-                app_logger.warning(
-                    "redis connection fail, can't use the cache")
-                return func(*func_args, **func_kwargs)
 
             if namespace == 'views':
                 if request.method == 'GET':
                     url = urlparse.urlsplit(request.url)
-                    key = ':'.join(field
-                                   for field in [prefix, namespace, tag,
-                                                 url.path, url.query] if field)
+                    key = _generate_key(
+                        namespace, tag, url_path=url.path, url_query=url.query)
                 else:
                     return func(*func_args, **func_kwargs)
             elif namespace == 'funcs':
                 params = '%s&%s' % (str(func_args), str(func_kwargs))
                 funcname = get_func_name(func)
-                key = ':'.join(
-                    field
-                    for field in [prefix, namespace, tag, funcname, params]
-                    if field)
-
-            data = redis.get(key)
-            if data is None:
-                start_time = time.time()
-                result = func(*func_args, **func_kwargs)
-                exec_time = (time.time() - start_time) * 1000
-                if over_ms is None:
-                    if exec_time > settings.CACHED_OVER_EXEC_MILLISECONDS:
-                        redis.setex(key, cPickle.dumps(result), expire)
-                        app_logger.debug(u'cached:%r' % key)
+                key = _generate_key(
+                    namespace, tag, funcname=funcname, params=params)
+            try:
+                data = redis.get(key)
+            except Exception as e:
+                app_logger.exception(e)
+                return func(*func_args, **func_kwargs)
+            else:
+                if data is not None:
+                    app_logger.debug(u'data from cache:%r' % key)
+                    return cPickle.loads(data)
                 else:
-                    if exec_time > over_ms:
-                        redis.setex(key, cPickle.dumps(result), expire)
-                        app_logger.debug(u'cached:%r' % key)
-                return result
-            return cPickle.loads(data)
+                    start_time = time.time()
+                    result = func(*func_args, **func_kwargs)
+                    exec_time = (time.time() - start_time) * 1000
+                    if exec_time > cached_over_ms:
+                        try:
+                            redis.setex(key, cPickle.dumps(result), expire)
+                            app_logger.debug(u'cached:%r' % key)
+                        except Exception as e:
+                            app_logger.exception(e)
+                    return result
 
         return wrapper
 
