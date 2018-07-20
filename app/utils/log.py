@@ -6,7 +6,7 @@ import sys
 import time
 from functools import wraps
 from logging import Logger, raiseExceptions
-from logging.handlers import TimedRotatingFileHandler
+from logging import FileHandler
 
 import settings
 import utils
@@ -94,8 +94,7 @@ def init_logger(logger_name=settings.LOGGER_NAME,
             }
 
             for log_level, log_file in log_files.items():
-                file_handler = TimedRotatingFileHandler(log_file, 'midnight',
-                                                        1, 7)
+                file_handler = FileHandler(log_file)
                 file_handler.setLevel(log_level)
                 file_handler.setFormatter(formatter)
                 file_handler.addFilter(RequestIDLogFilter())
@@ -105,7 +104,7 @@ def init_logger(logger_name=settings.LOGGER_NAME,
             level = logging.getLevelName(logging_level.upper())
             logger.setLevel(level)
             log_file = os.path.join(log_path, logfile_name + '.log')
-            file_handler = TimedRotatingFileHandler(log_file, 'midnight', 1, 7)
+            file_handler = FileHandler(log_file)
             file_handler.setLevel(logging.DEBUG)
             file_handler.setFormatter(formatter)
             file_handler.addFilter(RequestIDLogFilter())
