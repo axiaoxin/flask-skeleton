@@ -28,7 +28,7 @@ EXCEPTION_RETRY_COUNT = config('EXCEPTION_RETRY_COUNT', default=2, cast=int)
 
 FAKE_HANDLE_TASK = config('FAKE_HANDLE_TASK', default=False, cast=bool)
 
-REQUESTS_POOL_SIZE = config('REQUESTS_POOL_SIZE', default=10, cast=int)
+REQUESTS_POOL_SIZE = config('REQUESTS_POOL_SIZE', default=50, cast=int)
 
 REQUEST_ID_KEY = config('REQUEST_ID_KEY', default='X-Request-ID')
 
