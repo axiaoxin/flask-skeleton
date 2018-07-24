@@ -8,7 +8,6 @@ sys.path.append(app_path)
 import settings  # noqa
 
 proc_name = settings.SERVICE_NAME
-bind = settings.API_BIND
 workers = cpu_count()
 worker_class = 'gevent'
 reload = settings.DEBUG
