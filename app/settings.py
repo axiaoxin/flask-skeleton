@@ -19,7 +19,6 @@ APP_ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
 PROJECT_ROOT_PATH = os.path.dirname(APP_ROOT_PATH)
 
 SERVICE_NAME = config('SERVICE_NAME', default='flask-skeleton')
-API_BIND = config('API_URL', default='localhost:5000')
 
 JSON_AS_ASCII = config('JSON_AS_ASCII', default=False, cast=bool)
 JSON_KEYCASE = config('JSON_KEYCASE', default=None)
