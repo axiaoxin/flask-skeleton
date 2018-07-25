@@ -1,0 +1,11 @@
+{
+  "description" : "zns apiserver log pipeline",
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "patterns": ["\\[%{TIMESTAMP_ISO8601:timestamp}\\] \\[%{NUMBER:process_id:int}\\] \\[%{LOGLEVEL:loglevel}\\] \\[%{UUID:request_id}\\] (?<msg>.+ (?:%{NUMBER:use_time:float}ms)?.*)"]
+      }
+    }
+  ]
+}
