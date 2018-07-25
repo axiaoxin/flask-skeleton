@@ -1,0 +1,11 @@
+{
+  "description" : "zns gunicorn access log pipeline",
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "patterns": ["\\[%{HTTPDATE:timestamp}\\] %{IP:remote} \"%{DATA:referer}\" \"%{DATA:ua}\" \"%{DATA:status_line}\" %{NUMBER:status_code:int} <%{NUMBER:process_id:int}> %{NUMBER:use_time:float}"]
+      }
+    }
+  ]
+}
