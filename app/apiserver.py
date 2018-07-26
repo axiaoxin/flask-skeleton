@@ -22,7 +22,7 @@ def bad_request(error):
 
 @app.errorhandler(404)
 def api_not_found(error):
-    return response(code=RetCode.ENTRY_NOT_FOUND)
+    return response(code=RetCode.ENTITY_NOT_FOUND)
 
 
 @app.errorhandler(500)
