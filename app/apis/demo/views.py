@@ -82,7 +82,7 @@ class Entry(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         '''
@@ -122,7 +122,7 @@ class NotifyTask(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         '''
@@ -157,7 +157,7 @@ class NotifyStatus(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
@@ -202,7 +202,7 @@ class Records(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
@@ -237,7 +237,7 @@ class Records(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
@@ -270,7 +270,7 @@ class Records(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
@@ -299,7 +299,7 @@ class Records(BaseView):
               成功: {"code": 0, "msg": "SUCCESS", "data": null}
               失败: {"code": -1, "msg": "FAILURE", "data": null}
               参数错误: {"code": 400, "msg": "PARAMS ERROR", "data": null}
-              资源不存在: {"code": 404, "msg": "ENTRY NOT FOUND", "data": null}
+              资源不存在: {"code": 404, "msg": "ENTITY NOT FOUND", "data": null}
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
