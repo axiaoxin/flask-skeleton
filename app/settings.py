@@ -23,8 +23,6 @@ SERVICE_NAME = config('SERVICE_NAME', default='flask-skeleton')
 JSON_AS_ASCII = config('JSON_AS_ASCII', default=False, cast=bool)
 JSON_KEYCASE = config('JSON_KEYCASE', default=None)
 
-EXCEPTION_RETRY_COUNT = config('EXCEPTION_RETRY_COUNT', default=2, cast=int)
-
 FAKE_HANDLE_TASK = config('FAKE_HANDLE_TASK', default=False, cast=bool)
 
 REQUESTS_POOL_SIZE = config('REQUESTS_POOL_SIZE', default=50, cast=int)

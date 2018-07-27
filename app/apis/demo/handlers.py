@@ -16,7 +16,11 @@ def handle_message(data):
     return task
 
 
-@celery.task(bind=True)
+@celery.task(
+    bind=True,
+    autoretry_for=[Exception],
+    max_retries=10,
+    default_retry_delay=60 * 1)
 def notify(self, data):
     '''根据参数动态发送通知'''
     notify_module = notify_modules.import_module('tof')
