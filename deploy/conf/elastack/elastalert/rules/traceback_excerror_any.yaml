@@ -1,0 +1,38 @@
+name: Traceback Exception Error
+
+# 告警检测
+type: any
+index: filebeat-*
+filter:
+  - query:
+      query_string:
+        query: "message: error AND (traceback OR exception)"
+
+# 告警抑制
+realert:
+  minutes: 5
+exponential_realert:
+  hours: 1
+
+
+# 告警聚合
+aggregation_key: name
+
+
+# 告警方式配置
+smtp_host: smtp.youemailserver.com
+smtp_port: youemailserver_port
+smtp_auth_file: ../smtp_account.yaml  # username password
+from_addr: sender@xx.com
+email:
+  - "to1@xx.com"
+  - "to2@xx.com"
+
+custom_alert_params:
+  - param1
+  - param2
+
+# 发送告警
+alert:
+  - "email"
+  - "custom_alerters_pkg.alerter_module.AlerterClass"
