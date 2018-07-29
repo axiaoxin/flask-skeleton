@@ -24,6 +24,9 @@ if [ -f $upgrade_file ]; then
     echo updating supervisor...
     $current_proj/deploy/admin.sh update
 
+    # clean logs
+    rm $current_proj/logs/*
+
     # restart
     echo restarting all...
     $current_proj/deploy/admin.sh restart all
