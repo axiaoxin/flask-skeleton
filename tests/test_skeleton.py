@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import cPickle
-import logging
 import time
-
-import pytest
 
 
 def test_peewee_mysql_conn(app, mysql):
@@ -36,7 +33,7 @@ def test_error_handler(app, client, utils):
 
     @app.route('/400')
     def tmp():
-        k = request.values['key']
+        request.values['key']
 
     @app.route('/500')
     def tmp500():
@@ -98,21 +95,12 @@ def test_log_func_call(utils, app, caplog):
     from utils.log import log_func_call
 
     @log_func_call
-    def normal():
-        import time
-        time.sleep(.1)
+    def func():
+        pass
 
-    @log_func_call
-    def warning_too_long():
-        import time
-        time.sleep(app.config['CACHED_OVER_EXEC_MILLISECONDS'] / 1000.)
-
-    normal()
+    func()
     log = caplog.text.strip()
-    assert "100" in log and log.endswith('ms')
-    warning_too_long()
-    log = caplog.text.strip()
-    assert "WARNING" in log and log.endswith('ms')
+    assert log.endswith('ms')
 
 
 def test_cached_call_funcs(app, utils, redis, caplog):
@@ -288,7 +276,6 @@ s = ''
 
 def test_redis_lock(app, utils, redis):
     from utils.cache import get_redislock
-    from utils.log import app_logger
 
     global s
 

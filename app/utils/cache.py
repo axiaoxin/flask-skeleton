@@ -33,7 +33,6 @@ def cached_call(cached_over_ms=settings.CACHED_OVER_EXEC_MILLISECONDS,
                 expire=settings.CACHED_EXPIRE_SECONDS,
                 tag='',
                 namespace='views'):
-    prefix = 'cached_call'
 
     def cached_deco(func):
         @wraps(func)
