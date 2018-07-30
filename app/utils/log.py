@@ -163,10 +163,7 @@ def _log_func_call(func, use_time, *func_args, **func_kwargs):
         func_name=func_name,
         params=', '.join('%s=%r' % p for p in params),
         use_time=use_time * 1000)
-    if use_time * 1000 > settings.CACHED_OVER_EXEC_MILLISECONDS:
-        app_logger.warning(func_call)
-    else:
-        app_logger.info(func_call)
+    app_logger.info(func_call)
 
 
 def log_func_call(func):
