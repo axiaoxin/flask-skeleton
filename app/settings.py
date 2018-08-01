@@ -54,7 +54,7 @@ SENTRY_DSN = config(
 
 MYSQL_URL = config(
     'MYSQL_URL',
-    default='mysql+pool://root:root@localhost:3306/test?max_connections=40&stale_timeout=300'  # noqa
+    default='mysql+pool://root:@localhost:3306/test?max_connections=40&stale_timeout=300'  # noqa
 )
 
 ######################

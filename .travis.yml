@@ -1,14 +1,22 @@
 language: python
 python:
   - "2.7"
-  - "2.6"
+
+services:
+    - redis-server
+    - rabbitmq
+    - mysql
+
+env:
+    - CACHED_CALL=True
+
+before_install:
+    - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-  
-before_script:
-  - export PYTHONPATH="$TRAVIS_BUILD_DIR:$TRAVIS_BUILD_DIR/app"
-  
+
 # command to run tests
 script:
   - pytest # or py.test for Python versions 3.5 and below

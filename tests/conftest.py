@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 import sys
 import pytest
-sys.path.append('..')  # noqa
-sys.path.append('../app')  # noqa
+import os
+
+root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))  # noqa
+sys.path.append(root_path)  # noqa
+sys.path.append(os.path.join(root_path, 'app'))  # noqa
 
 
 @pytest.fixture
