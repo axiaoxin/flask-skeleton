@@ -1,9 +1,9 @@
 *.pyc
 .env
-__pycache__/*
+__pycache__
 celerybeat-schedule
 celerybeat.pid
 *.pid
 deploy/venv/*
-tests/.pytest_cache
+.pytest_cache
 logs/*.log*
