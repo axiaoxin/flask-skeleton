@@ -180,6 +180,7 @@ class NotifyStatus(BaseView):
 
 
 class Records(BaseView):
+    @peewee_mysql.connection_context()
     def get(self, id=None):
         """查
         根据db主键id查询对应记录
@@ -206,15 +207,14 @@ class Records(BaseView):
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
-        with peewee_mysql:
-            if id is None:
-                order_by = request.values.get('order_by', 'id')
-                order_type = request.values.get('order_type', 'desc')
-                data = Message.get_record(
-                    order_by=order_by, order_type=order_type)
-            else:
-                data = Message.get_record(id)
-            return response(data)
+        if id is None:
+            order_by = request.values.get('order_by', 'id')
+            order_type = request.values.get('order_type', 'desc')
+            data = Message.get_record(
+                order_by=order_by, order_type=order_type)
+        else:
+            data = Message.get_record(id)
+        return response(data)
 
     def post(self):
         """增
@@ -241,6 +241,8 @@ class Records(BaseView):
               服务器错误: {"code": 500, "msg": "INTERNAL SERVER ERROR",
                            "data": null}
         """
+        # 除了使用装饰器管理连接，也可以用with语句。
+        # 使用with db对象除了可以管理连接，还能开启一个事务
         with peewee_mysql:
             data = request.get_json()
             if not validator.validate(data,
