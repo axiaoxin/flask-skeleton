@@ -13,7 +13,10 @@ class Message(MySQLBaseModel):
     SEND_PENDING = 0
     SEND_SUCCESS = 1
 
-    id = peewee.BigAutoField(primary_key=True)
+    id = peewee.PrimaryKeyField()
+    # 如果显式定义主键，必须使用主键类型是PrimaryKeyField或主键属性sequence为True，
+    # 插入数据后才能得到自增主键值
+    # 例如 id = peewee.BigAutoField(primary_key=True, sequence=True)
     message = peewee.TextField()
     send_status = peewee.SmallIntegerField(default=SEND_PENDING)
     is_deleted = peewee.BooleanField(default=False)
