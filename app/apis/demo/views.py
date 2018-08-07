@@ -14,7 +14,7 @@ import utils
 utils.register_decorators_on_module_funcs(handlers, handler_decorators)
 
 
-class Entry(BaseView):
+class EntryView(BaseView):
     def post(self):
         '''消息入口
         异步发送接收到的通知消息，返回task_id
@@ -100,7 +100,7 @@ class Entry(BaseView):
             return response(code=retcode, data=result)
 
 
-class NotifyTask(BaseView):
+class NotifyTaskView(BaseView):
     def get(self, task_id):
         '''获取任务
         根据task_id查询任务信息
@@ -135,7 +135,7 @@ class NotifyTask(BaseView):
         return response(result)
 
 
-class NotifyStatus(BaseView):
+class NotifyStatusView(BaseView):
     def get(self, task_id):
         """查询消息发送状态
         根据task_id查询对应消息的发送状态
@@ -179,7 +179,7 @@ class NotifyStatus(BaseView):
         return response(data, retcode)
 
 
-class Records(BaseView):
+class RecordsView(BaseView):
     @peewee_mysql.connection_context()
     def get(self, id=None):
         """查
