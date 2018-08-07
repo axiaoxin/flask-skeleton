@@ -70,14 +70,14 @@ class Message(MySQLBaseModel):
     @classmethod
     def update_record(cls, id, send_status=None, is_deleted=None,
                       to_dict=True):
-        data = cls.select().where(cls.id == id,
-                                  cls.is_deleted == 0).first()
+        data = cls.select().where(cls.id == id).first()
         if not data:
             return
         if send_status is not None:
             data.send_status = send_status
         if is_deleted is not None:
             data.is_deleted = is_deleted
+        data.updated_at = datetime.datetime.now()
         data.save()
         if to_dict:
             data = model2dict(data)
