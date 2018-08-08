@@ -28,11 +28,8 @@ FAKE_HANDLE_TASK = config('FAKE_HANDLE_TASK', default=False, cast=bool)
 REQUESTS_POOL_SIZE = config('REQUESTS_POOL_SIZE', default=50, cast=int)
 
 REQUEST_ID_KEY = config('REQUEST_ID_KEY', default='X-Request-ID')
-DEFAULT_REQUEST_RATELIMIT_COUNTS = config(
-    'DEFAULT_REQUEST_RATELIMIT_COUNTS', default=0)
-DEFAULT_REQUEST_RATELIMIT_SECONDS = config(
-    'DEFAULT_REQUEST_RATELIMIT_SECONDS', default=0)
-
+DEFAULT_REQUEST_RATELIMIT_EXP = config(
+    'DEFAULT_REQUEST_RATELIMIT_EXP', default='0/0')
 
 ####################
 # settings for log #

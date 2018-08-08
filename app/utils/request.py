@@ -85,22 +85,29 @@ def on_over_limit(limit):
     return response(code=RetCode.RATE_LIMIT_ERROR)
 
 
-def ratelimit(counts=settings.DEFAULT_REQUEST_RATELIMIT_COUNTS,
-              seconds=settings.DEFAULT_REQUEST_RATELIMIT_SECONDS,
+def ratelimit(rate_exp=settings.DEFAULT_REQUEST_RATELIMIT_EXP,
               send_x_headers=True,
               on_over_limit=on_over_limit,
               scope_func=lambda: request.remote_addr,
               key_func=lambda: request.endpoint):
-    '''usage:
-    @ratelimit(counts=100, seconds=60)
+    '''
+    :params rate_exp string/function string表达式或者返回string表达式的回调函数
+        eg:"100/60" 或者 lambda: "100/60"，默认为"0/0"不限制
+    :params send_x_headers bool 头信息中是否返回ratelimit信息，默认为True
+    :params on_over_limit function 超过限制时的回调函数，默认返回JSON提示超过限制
+    :params scope_func function 针对某个指标进行限制，默认为访问IP
+    :params key_func function redis缓存次数用到的key的一部分值，默认为访问的endpoint
+
+    usage:
+    @ratelimit('100/60')
     def view():
        pass
     '''
 
     def decorator(f):
         def rate_limited(*args, **kwargs):
-            limit = counts if isinstance(counts, (int, float)) else counts()
-            per = seconds if isinstance(seconds, (int, float)) else seconds()
+            rate = rate_exp if isinstance(rate_exp, basestring) else rate_exp()
+            limit, per = map(int, rate.split('/'))
             # < 1 表示不限制
             if limit < 1 or per < 1:
                 return f(*args, **kwargs)
