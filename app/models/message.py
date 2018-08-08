@@ -26,13 +26,17 @@ class Message(MySQLBaseModel):
     class Meta:
         db_table = 'message'
 
+    def save(self, *args, **kwargs):
+        self.updated_at = datetime.datetime.now()
+        return super(Message, self).save(*args, **kwargs)
+
     @classmethod
     def get_record(cls,
                    id=None,
                    order_by='id',
                    order_type='desc',
                    to_dict=True):
-        if id is not None:
+        if id:
             data = cls.select().where(cls.id == id,
                                       cls.is_deleted == 0).first()
         else:
@@ -77,7 +81,6 @@ class Message(MySQLBaseModel):
             data.send_status = send_status
         if is_deleted is not None:
             data.is_deleted = is_deleted
-        data.updated_at = datetime.datetime.now()
         data.save()
         if to_dict:
             data = model2dict(data)
