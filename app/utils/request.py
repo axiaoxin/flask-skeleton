@@ -99,7 +99,7 @@ def ratelimit(rate_exp=settings.DEFAULT_REQUEST_RATELIMIT_EXP,
     :params key_func function redis缓存次数用到的key的一部分值，默认为访问的endpoint
 
     usage:
-    @ratelimit('100/60')
+    @ratelimit('100/60t l')
     def view():
        pass
     '''

@@ -7,7 +7,6 @@ from apis import validator, handler_decorators, BaseView
 from . import validator_schemas
 from . import handlers
 from services import peewee_mysql
-from models.message import Message
 import utils
 
 # 为handlers里面的函数注册装饰器
@@ -210,10 +209,10 @@ class RecordsView(BaseView):
         if id is None:
             order_by = request.values.get('order_by', 'id')
             order_type = request.values.get('order_type', 'desc')
-            data = Message.get_record(
+            data = handlers.get_message(
                 order_by=order_by, order_type=order_type)
         else:
-            data = Message.get_record(id)
+            data = handlers.get_message(id)
         return response(data)
 
     def post(self):
@@ -248,7 +247,7 @@ class RecordsView(BaseView):
             if not validator.validate(data,
                                       validator_schemas.message_entry_data):
                 return response(validator.errors, RetCode.PARAMS_ERROR)
-            data = Message.add_record(data)
+            data = handlers.add_message(data)
             return response(data)
 
     def delete(self, id):
@@ -277,7 +276,7 @@ class RecordsView(BaseView):
                            "data": null}
         """
         with peewee_mysql:
-            data = Message.delete_record(id)
+            data = handlers.delete_message(id)
             return response(data)
 
     def put(self, id):
@@ -306,5 +305,7 @@ class RecordsView(BaseView):
                            "data": null}
         """
         with peewee_mysql:
-            data = Message.update_record(id, send_status=Message.SEND_FAILURE)
+            from models.message import Message
+            data = handlers.update_message(
+                id, send_status=Message.SEND_FAILURE)
             return response(data)
