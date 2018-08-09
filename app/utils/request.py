@@ -63,7 +63,10 @@ class RateLimit(object):
     expiration_window = 2
 
     def __init__(self, key_prefix, limit, per, send_x_headers):
-        self.reset = (int(time.time()) // per) * per + per
+        day_seconds = 60 * 60 * 24
+        trunc = per if per < day_seconds else day_seconds
+        offset = per if per < day_seconds else per + time.timezone
+        self.reset = int(time.time()) // trunc * trunc + offset
         self.key = key_prefix + str(self.reset)
         self.limit = limit
         self.per = per

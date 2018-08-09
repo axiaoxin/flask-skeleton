@@ -56,6 +56,7 @@ def inject_x_rate_headers(response):
         h.add('X-RateLimit-Remaining', str(limit.remaining))
         h.add('X-RateLimit-Limit', str(limit.limit))
         h.add('X-RateLimit-Reset', str(limit.reset))
+        h.add('X-RateLimit-Per', str(limit.per))
     return response
 
 
