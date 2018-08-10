@@ -54,10 +54,15 @@ SENTRY_DSN = config(
 # settings for database #
 #########################
 
-MYSQL_URL = config(
-    'MYSQL_URL',
-    default='mysql+pool://root:@localhost:3306/test?max_connections=40&stale_timeout=300'  # noqa
-)
+MYSQL_HOST = config('MYSQL_HOST', default='localhost')
+MYSQL_PORT = config('MYSQL_PORT', default=3306, cast=int)
+MYSQL_DBNAME = config('MYSQL_DBNAME', default='test')
+MYSQL_USER = config('MYSQL_USER', default='root')
+MYSQL_PASSWORD = config('MYSQL_PASSWORD', default='')
+DB_POOL_MAX_CONNECTIONS = config(
+    'DB_POOL_MAX_CONNECTIONS', default=40, cast=int)
+DB_POOL_STALE_TIMEOUT = config('DB_POOL_STALE_TIMEOUT', default=300, cast=int)
+DB_POOL_WAIT_TIMEOUT = config('DB_POOL_WAIT_TIMEOUT', default=300, cast=int)
 
 ######################
 # settings for redis #
