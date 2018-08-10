@@ -51,7 +51,7 @@ def get_message(id=None, order_by='id', order_type='desc', to_dict=True):
                                       Message.is_deleted == 0).first()
     else:
         order_field = getattr(Message, order_by)
-        if order_type.lower() == 'asc':
+        if order_type.lower() == 'desc':
             data = Message.select().where(
                 Message.is_deleted == 0).order_by(-order_field)
         else:
