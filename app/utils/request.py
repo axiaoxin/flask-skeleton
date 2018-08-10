@@ -62,7 +62,7 @@ signals.before_task_publish.connect(celery_persist_request_id)
 class RateLimit(object):
     expiration_window = 2
 
-    def __init__(self, key_prefix, limit, per, send_x_headers):
+    def __init__(self, key_prefix, limit, per, send_x_headers, scope):
         day_seconds = 60 * 60 * 24
         trunc = per if per < day_seconds else day_seconds
         offset = per if per < day_seconds else per + time.timezone
@@ -71,6 +71,7 @@ class RateLimit(object):
         self.limit = limit
         self.per = per
         self.send_x_headers = send_x_headers
+        self.scope = scope
         p = redis.pipeline()
         p.incr(self.key)
         p.expireat(self.key, self.reset + self.expiration_window)
@@ -115,8 +116,9 @@ def ratelimit(rate_exp=settings.DEFAULT_REQUEST_RATELIMIT_EXP,
             if limit < 1 or per < 1:
                 return f(*args, **kwargs)
 
-            sign_key = 'ratelimit:sign:%s:%s:' % (key_func(), scope_func())
-            rlimit = RateLimit(sign_key, limit, per, send_x_headers)
+            scope = scope_func()
+            sign_key = 'ratelimit:sign:%s:%s:' % (key_func(), scope)
+            rlimit = RateLimit(sign_key, limit, per, send_x_headers, scope)
             g._view_rate_limit = rlimit
             if on_over_limit is not None and rlimit.over_limit:
                 return on_over_limit(rlimit)
