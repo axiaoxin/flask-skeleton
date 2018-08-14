@@ -34,6 +34,7 @@ if [ -f $upgrade_file ]; then
     # delete 7 days ago backup
     echo deleting old backup...
     find $proj_base_dir -maxdepth 1 -type d -name "$proj_name.*" -ctime +7 -exec rm -rf {} \;
+    rm -rf $current_proj-removed
 else
     echo no $upgrade_file
 fi
