@@ -86,7 +86,10 @@ def get_view_rate_limit():
 
 
 def on_over_limit(limit):
-    return response(code=RetCode.RATE_LIMIT_ERROR)
+    msg = u'{scope} over limit of {limit} times every {per} seconds.'.format(
+        scope=limit.scope, limit=limit.limit, per=limit.per)
+    app_logger.warning(msg)
+    return response(code=RetCode.RATE_LIMIT_ERROR, msg=msg)
 
 
 def ratelimit(rate_exp=settings.DEFAULT_REQUEST_RATELIMIT_EXP,
