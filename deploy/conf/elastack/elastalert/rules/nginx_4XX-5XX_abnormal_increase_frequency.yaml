@@ -1,14 +1,17 @@
-name: Traceback Exception Error
-
+name: Nginx 4XX-5XX Maybe Abnormal Increase
 
 # 告警检测
-type: any
+type: frequency
 index: filebeat-*
 filter:
-  - query:
-      query_string:
-        query: "message: error AND (traceback OR exception)"
+  - range:
+      nginx.access.response_code:
+        from: 400
+        to: 599
 
+num_events: 50
+timeframe:
+    minutes: 5
 
 # 告警抑制
 realert:
