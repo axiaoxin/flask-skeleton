@@ -4,7 +4,7 @@ import sys
 reload(sys)  # noqa
 sys.setdefaultencoding('utf8')  # noqa
 
-from flask import g
+from flask import g, redirect, url_for
 
 from apis.docs import docs
 from apis.demo.routes import message_api
@@ -62,6 +62,11 @@ def inject_x_rate_headers(response):
 @app.route('/')
 def hello_world():
     return response(data='Hello!')
+
+
+@app.route('/favicon.ico')
+def ico():
+    return redirect(url_for('static', filename='img/favicon.ico'))
 
 
 app.register_blueprint(docs, url_prefix='/docs')

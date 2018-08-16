@@ -1,5 +1,13 @@
-flask-skeleton [![Build Status](https://travis-ci.org/axiaoxin/flask-skeleton.svg?branch=master)](https://travis-ci.org/axiaoxin/flask-skeleton)
+![](https://raw.githubusercontent.com/axiaoxin/flask-skeleton/master/app/static/img/favicon.ico)
+[![Build Status](https://travis-ci.org/axiaoxin/flask-skeleton.svg?branch=master)](https://travis-ci.org/axiaoxin/flask-skeleton)
+
+
+flask-skeleton
 --------------
+
+
+-----------------------------------------------------------------------
+
 
 # run
 
