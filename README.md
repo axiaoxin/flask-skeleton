@@ -1,12 +1,15 @@
-![](https://raw.githubusercontent.com/axiaoxin/flask-skeleton/master/app/static/img/favicon.ico)
+![proj-icon](https://raw.githubusercontent.com/axiaoxin/flask-skeleton/master/app/static/img/favicon.ico)
 [![Build Status](https://travis-ci.org/axiaoxin/flask-skeleton.svg?branch=master)](https://travis-ci.org/axiaoxin/flask-skeleton)
-
+![version-badge](https://img.shields.io/github/release/axiaoxin/flask-skeleton.svg)
+![downloads](https://img.shields.io/github/downloads/axiaoxin/flask-skeleton/total.svg)
+![license](https://img.shields.io/github/license/axiaoxin/flask-skeleton.svg)
+![issues](https://img.shields.io/github/issues/axiaoxin/flask-skeleton.svg)
 
 flask-skeleton
 --------------
 
-
------------------------------------------------------------------------
+The goal is to do business logic development without paying attention to the organization of the flask project
+and integration of common tools, no need to write repeatedly.
 
 
 # run
