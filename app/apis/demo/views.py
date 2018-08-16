@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import request
+from utils import validate_dict
 from utils.response import response
 from utils.response import RetCode, RetCodeMsg
-from apis import validator, handler_decorators, BaseView
+from apis import handler_decorators, BaseView
 from . import validator_schemas
 from . import handlers
 from services import peewee_mysql
@@ -86,10 +87,7 @@ class EntryView(BaseView):
                            "data": null}
         '''
         data = request.get_json() or {}
-        validator.allow_unknown = True
-        if not validator.validate(data, validator_schemas.message_entry_data):
-            return response(validator.errors, RetCode.PARAMS_ERROR)
-
+        data = validate_dict(data, validator_schemas.message_entry_data)
         async = data.get('async', True)
         if async is True:
             task = handlers.handle_message(data)
@@ -244,9 +242,7 @@ class RecordsView(BaseView):
         # 使用with db对象除了可以管理连接，还能开启一个事务
         with peewee_mysql:
             data = request.get_json()
-            if not validator.validate(data,
-                                      validator_schemas.message_entry_data):
-                return response(validator.errors, RetCode.PARAMS_ERROR)
+            data = validate_dict(data, validator_schemas.message_entry_data)
             data = handlers.add_message(data)
             return response(data)
 

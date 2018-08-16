@@ -6,6 +6,10 @@ import types
 import inspect
 import re
 
+from flask import abort
+from cerberus import Validator
+# http://docs.python-cerberus.org/en/stable/validation-rules.html
+
 from utils.log import app_logger
 
 
@@ -81,3 +85,13 @@ def do_fake_task(sec=0.05, result='the-fake-result'):
     import time
     time.sleep(sec)
     return result
+
+
+validator = Validator()
+
+
+def validate_dict(data, schema, allow_unknown=True):
+    validator.allow_unkown = allow_unknown
+    if not validator.validate(data, schema):
+        return abort(400)
+    return data

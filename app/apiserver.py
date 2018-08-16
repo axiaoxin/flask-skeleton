@@ -16,8 +16,7 @@ import settings
 
 @app.errorhandler(400)
 def bad_request(error):
-    msg = u'you passed some invalid parameters.'
-    return response(code=RetCode.PARAMS_ERROR, msg=msg)
+    return response(code=RetCode.PARAMS_ERROR)
 
 
 @app.errorhandler(404)
