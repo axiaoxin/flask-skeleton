@@ -40,7 +40,6 @@ def test_error_handler(app, client, utils):
         1 / 0
 
     rv = client.get('/400')
-    assert 'invalid parameters' in rv.get_json()['msg']
     assert rv.status_code == 400
 
     rv = client.get('/404')
