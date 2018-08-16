@@ -113,6 +113,9 @@ def ratelimit(rate_exp=settings.DEFAULT_REQUEST_RATELIMIT_EXP,
 
     def decorator(f):
         def rate_limited(*args, **kwargs):
+            if not settings.LIMIT_REQUEST_RATE:
+                return f(*args, **kwargs)
+
             rate = rate_exp if isinstance(rate_exp, basestring) else rate_exp()
             limit, per = map(int, rate.split('/'))
             # < 1 表示不限制

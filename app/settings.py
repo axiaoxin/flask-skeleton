@@ -28,6 +28,12 @@ FAKE_HANDLE_TASK = config('FAKE_HANDLE_TASK', default=False, cast=bool)
 REQUESTS_POOL_SIZE = config('REQUESTS_POOL_SIZE', default=50, cast=int)
 
 REQUEST_ID_KEY = config('REQUEST_ID_KEY', default='X-Request-ID')
+
+##########################
+# settings for ratelimit #
+##########################
+
+LIMIT_REQUEST_RATE = config('LIMIT_REQUEST_RATE', default=False, cast=bool)
 DEFAULT_REQUEST_RATELIMIT_EXP = config(
     'DEFAULT_REQUEST_RATELIMIT_EXP', default='0/0')
 
