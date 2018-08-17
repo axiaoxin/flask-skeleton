@@ -12,7 +12,7 @@ CREATE TABLE `message` (
   `created_at` DATETIME NOT NULL DEFAULT NOW() COMMENT '创建时间',
   `updated_at` DATETIME NOT NULL DEFAULT NOW() ON UPDATE NOW() COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_message_id` (`message_id`)
+  UNIQUE INDEX `uidx_message_id` (`message_id`)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8
 COMMENT = '消息表';
