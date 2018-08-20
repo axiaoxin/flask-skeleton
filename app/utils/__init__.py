@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import math
 import time
 import datetime
 import types
@@ -95,3 +96,22 @@ def validate_dict(data, schema, allow_unknown=True):
     if not validator.validate(data, schema):
         return abort(400)
     return data
+
+
+def pagination(items_count, page_num, page_size):
+    if page_num > 0 and page_size > 0:
+        pages_count = int(math.ceil(items_count / float(page_size)))
+        has_next = True if page_num + 1 <= pages_count else False
+        has_prev = True if page_num - 1 > 0 else False
+        next_page_num = page_num + 1 if has_next else page_num
+        prev_page_num = page_num - 1 if has_prev else page_num
+        return {
+            'items_count': items_count,
+            'pages_count': pages_count,
+            'page_num': page_num,
+            'page_size': page_size,
+            'has_next': has_next,
+            'has_prev': has_prev,
+            'next_page_num': next_page_num,
+            'prev_page_num': prev_page_num,
+        }

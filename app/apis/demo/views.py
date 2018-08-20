@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import request
-from utils import validate_dict
+from utils import validate_dict, pagination
 from utils.response import response
 from utils.response import RetCode, RetCodeMsg
 from apis import handler_decorators, BaseView
@@ -205,10 +205,20 @@ class RecordsView(BaseView):
                            "data": null}
         """
         if id is None:
+            page_num = int(request.values.get('page_num', 1))
+            page_size = int(request.values.get('page_size', 10))
             order_by = request.values.get('order_by', 'id')
             order_type = request.values.get('order_type', 'desc')
-            data = handlers.get_message(
-                order_by=order_by, order_type=order_type)
+            send_status = request.values.get('send_status')
+            items = handlers.get_message(
+                order_by=order_by,
+                order_type=order_type,
+                page_num=page_num,
+                page_size=page_size,
+                send_status=send_status)
+            items_count = handlers.get_message_count(send_status)
+            data = {'items': items,
+                    'pagination': pagination(items_count, page_num, page_size)}
         else:
             data = handlers.get_message(id)
         return response(data)

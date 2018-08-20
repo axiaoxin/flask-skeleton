@@ -44,25 +44,41 @@ def get_notify_task(task_id):
     return notify.AsyncResult(task_id)
 
 
-def get_message(id=None, order_by='id', order_type='desc', to_dict=True):
+def get_message(id=None,
+                send_status=None,
+                order_by='id',
+                order_type='desc',
+                page_num=1,
+                page_size=10,
+                to_dict=True):
     '''查询数据库message记录'''
+    data = Message.select()
     if id:
-        data = Message.select().where(Message.id == id,
-                                      Message.is_deleted == 0).first()
+        data = data.where(Message.id == id, Message.is_deleted == 0).first()
     else:
+        if send_status is not None:
+            data = data.where(Message.send_status == send_status)
+
         order_field = getattr(Message, order_by)
         if order_type.lower() == 'desc':
-            data = Message.select().where(
-                Message.is_deleted == 0).order_by(-order_field)
+            data = data.where(Message.is_deleted == 0).order_by(-order_field)
         else:
-            data = Message.select().where(
-                Message.is_deleted == 0).order_by(+order_field)
+            data = data.where(Message.is_deleted == 0).order_by(+order_field)
+        if page_size > 0 and page_num > 0:
+            data = data.paginate(page_num, page_size)
     if to_dict:
         if isinstance(data, peewee.SelectQuery):
             data = [model2dict(i) for i in data]
         else:
             data = model2dict(data)
     return data
+
+
+def get_message_count(send_status=None):
+    data = Message.select(Message.id).where(Message.is_deleted == 0)
+    if send_status is not None:
+        data = data.where(Message.send_status == send_status)
+    return data.count()
 
 
 def add_message(message, to_dict=True):
