@@ -30,7 +30,7 @@ class AutoReconnectionMySQLDatabase(MySQLDatabase):
         for i in range(retries):
             try:
                 conn = super(AutoReconnectionMySQLDatabase, self)._connect()
-                app_logger.info(
+                app_logger.debug(
                     'AutoReconnectionMySQLDatabase Connected. Connect times:%d'
                     % i)
                 return conn
