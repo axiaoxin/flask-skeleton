@@ -13,7 +13,7 @@ from requests import Session
 from requests.adapters import HTTPAdapter
 from flasgger import Swagger
 from flask_flatpages import FlatPages
-from playhouse.pool import PooledMySQLDatabase
+from peewee import MySQLDatabase
 
 import settings
 
@@ -22,31 +22,31 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 app.config.from_object(settings)
 
 
-class PooledAutoReconnectionMySQLDatabase(PooledMySQLDatabase):
+class AutoReconnectionMySQLDatabase(MySQLDatabase):
     def _connect(self):
+        from utils.log import app_logger
         retries = 4
-        sleep = 0
+        sleep = 0.1
         for i in range(retries):
             try:
-                return super(PooledAutoReconnectionMySQLDatabase,
-                             self)._connect()
+                conn = super(AutoReconnectionMySQLDatabase, self)._connect()
+                app_logger.info(
+                    'AutoReconnectionMySQLDatabase Connected. Connect times:%d'
+                    % i)
+                return conn
             except Exception as e:
                 # if connect error, retry 3 times
-                from utils.log import app_logger
-                app_logger.warning('%s. Connect times: %d' % (str(e), i))
+                app_logger.warning('%s. Connect times:%d' % (str(e), i))
             time.sleep(sleep)
         raise e
 
 
-peewee_mysql = PooledAutoReconnectionMySQLDatabase(
+peewee_mysql = AutoReconnectionMySQLDatabase(
     database=settings.MYSQL_DBNAME,
     user=settings.MYSQL_USER,
     password=settings.MYSQL_PASSWORD,
     host=settings.MYSQL_HOST,
-    port=settings.MYSQL_PORT,
-    max_connections=settings.DB_POOL_MAX_CONNECTIONS,
-    stale_timeout=settings.DB_POOL_STALE_TIMEOUT,
-    timeout=settings.DB_POOL_WAIT_TIMEOUT)
+    port=settings.MYSQL_PORT)
 
 sentry_client = Client(settings.SENTRY_DSN)
 sentry = Sentry(app, client=sentry_client)
