@@ -16,7 +16,7 @@ import settings
 
 @app.errorhandler(400)
 def bad_request(error):
-    return response(code=RetCode.PARAMS_ERROR)
+    return response(code=RetCode.PARAMS_ERROR, msg=error.description)
 
 
 @app.errorhandler(404)

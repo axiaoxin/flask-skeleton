@@ -87,7 +87,7 @@ class EntryView(BaseView):
                            "data": null}
         '''
         data = request.get_json() or {}
-        data = validate_dict(data, validator_schemas.message_entry_data)
+        validate_dict(data, validator_schemas.message_entry_data)
         async = data.get('async', True)
         if async is True:
             task = handlers.handle_message(data)
@@ -252,7 +252,7 @@ class RecordsView(BaseView):
         # 使用with db对象除了可以管理连接，还能开启一个事务
         with peewee_mysql:
             data = request.get_json()
-            data = validate_dict(data, validator_schemas.message_entry_data)
+            validate_dict(data, validator_schemas.message_entry_data)
             data = handlers.add_message(data)
             return response(data)
 

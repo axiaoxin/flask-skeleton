@@ -94,8 +94,8 @@ validator = Validator()
 def validate_dict(data, schema, allow_unknown=True):
     validator.allow_unkown = allow_unknown
     if not validator.validate(data, schema):
-        return abort(400)
-    return data
+        return abort(400, validator.errors)
+    return True
 
 
 def pagination(items_count, page_num, page_size):
