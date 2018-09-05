@@ -10,6 +10,7 @@ requests
 ujson
 pyDes
 redis-py-cluster
+Flask-Mail
 
 ipython
 Flask-Script

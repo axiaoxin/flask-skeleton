@@ -166,3 +166,16 @@ SWAGGER = {
 FLATPAGES_ROOT = os.path.join(PROJECT_ROOT_PATH, 'docs')
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = ['.md', '.html', '.htm', '.txt']
+
+###########################
+# settings for flask-mail #
+###########################
+
+MAIL_SERVER = config('MAIL_SERVER', default='localhost')
+MAIL_PORT = config('MAIL_PORT', default=25, cast=int)
+MAIL_USE_TLS = config('MAIL_USE_TLS', default=False, cast=bool)
+MAIL_USE_SSL = config('MAIL_USE_SSL', default=False, cast=bool)
+MAIL_DEBUG = config('MAIL_DEBUG', default=DEBUG, cast=bool)
+MAIL_USERNAME = config('MAIL_USERNAME', default='')
+MAIL_PASSWORD = config('MAIL_PASSWORD', default='')
+MAIL_DEFAULT_SENDER = config('MAIL_DEFAULT_SENDER', default='')

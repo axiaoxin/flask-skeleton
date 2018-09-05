@@ -12,6 +12,7 @@ from cerberus import Validator
 # http://docs.python-cerberus.org/en/stable/validation-rules.html
 
 from utils.log import app_logger
+import settings
 
 
 def is_ipv4(ip):
@@ -115,3 +116,38 @@ def pagination(items_count, page_num, page_size):
             'next_page_num': next_page_num,
             'prev_page_num': prev_page_num,
         }
+
+
+def send_flask_mail(send_to,
+                    title,
+                    content,
+                    html=True,
+                    sender=settings.MAIL_DEFAULT_SENDER,
+                    cc=None,
+                    attachments=None):
+    '''使用邮件服务器发送邮件
+    :params send_to list: 收件人列表
+    :params title string: 邮件标题
+    :params content string: 邮件内容
+    :params html bool: 邮件内容是否为HTML格式，默认为True
+    :params sender string: 发件人
+    :params cc list: cc列表
+    :params attachments dict: 附件
+    eg: {"filename": "x.png", "content_type": "image/png", "data": img.read()}
+    '''
+    from services import mail, app
+    from flask_mail import Message
+
+    with app.app_context():
+        msg = Message()
+        msg.recipients = send_to
+        msg.cc = cc
+        msg.subject = title
+        msg.sender = sender
+        if html:
+            msg.html = content
+        else:
+            msg.body = content
+        if attachments:
+            msg.attach(**attachments)
+        mail.send(msg)

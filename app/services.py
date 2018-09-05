@@ -13,6 +13,7 @@ from requests import Session
 from requests.adapters import HTTPAdapter
 from flasgger import Swagger
 from flask_flatpages import FlatPages
+from flask_mail import Mail
 from peewee import MySQLDatabase
 
 import settings
@@ -97,3 +98,5 @@ def get_redis_client():
 
 
 redis = get_redis_client()
+
+mail = Mail(app)
