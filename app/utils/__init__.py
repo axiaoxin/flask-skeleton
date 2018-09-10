@@ -6,6 +6,7 @@ import datetime
 import types
 import inspect
 import re
+import socket
 
 from flask import abort
 from cerberus import Validator
@@ -13,6 +14,13 @@ from cerberus import Validator
 
 from utils.log import app_logger
 import settings
+
+
+def hostname():
+    try:
+        return socket.gethostname()
+    except Exception as e:
+        app_logger.exception(e)
 
 
 def is_ipv4(ip):

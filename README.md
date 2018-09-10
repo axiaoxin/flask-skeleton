@@ -4,6 +4,7 @@
 ![downloads](https://img.shields.io/github/downloads/axiaoxin/flask-skeleton/total.svg)
 ![license](https://img.shields.io/github/license/axiaoxin/flask-skeleton.svg)
 ![issues](https://img.shields.io/github/issues/axiaoxin/flask-skeleton.svg)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/axiaoxin)
 
 flask-skeleton
 --------------
