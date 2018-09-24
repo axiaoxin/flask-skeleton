@@ -31,9 +31,12 @@ def is_ipv4(ip):
     return False
 
 
-def find_ipv4(text):
+def find_ipv4(text, uniq=False):
     IPV4 = r"(?<![0-9])(?:(?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))(?![0-9])"  # noqa
-    return re.findall(IPV4, text)
+    if uniq:
+        return list(set(re.findall(IPV4, text)))
+    else:
+        return re.findall(IPV4, text)
 
 
 def datetime2timestamp(dt, is_int=True):
