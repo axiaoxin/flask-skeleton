@@ -5,6 +5,7 @@
 ![license](https://img.shields.io/github/license/axiaoxin/flask-skeleton.svg)
 ![issues](https://img.shields.io/github/issues/axiaoxin/flask-skeleton.svg)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/axiaoxin)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/axiaoxin/flask-skeleton/pulls)
 
 flask-skeleton
 --------------
