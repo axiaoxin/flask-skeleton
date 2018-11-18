@@ -12,7 +12,7 @@ pyDes
 redis-py-cluster
 Flask-Mail
 
-ipython
+#ipython
 Flask-Script
 gunicorn
 gevent
