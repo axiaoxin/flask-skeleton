@@ -67,7 +67,7 @@ def cached_call(cached_over_ms=settings.CACHED_OVER_EXEC_MILLISECONDS,
                     exec_time = (time.time() - start_time) * 1000
                     if exec_time > cached_over_ms:
                         try:
-                            redis.setex(key, cPickle.dumps(result), expire)
+                            redis.set(key, cPickle.dumps(result), ex=expire)
                             app_logger.debug(u'cached:%r' % key)
                         except Exception as e:
                             app_logger.exception(e)

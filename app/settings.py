@@ -75,7 +75,7 @@ MYSQL_PASSWORD = config('MYSQL_PASSWORD', default='')
 # if want to use REDIS_URL, just set REDIS_URL
 
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
-CACHED_CALL = config('CACHED_CALL', default=False, cast=bool)
+CACHED_CALL = config('CACHED_CALL', default=True, cast=bool)
 CACHED_OVER_EXEC_MILLISECONDS = config(
     'CACHED_OVER_EXEC_MILLISECONDS', default=800, cast=int)
 CACHED_EXPIRE_SECONDS = config('CACHED_EXPIRE_SECONDS', default=60, cast=int)
