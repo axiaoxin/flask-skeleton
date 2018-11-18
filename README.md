@@ -1,4 +1,5 @@
 ![proj-icon](https://raw.githubusercontent.com/axiaoxin/flask-skeleton/master/app/static/img/favicon.ico)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1021dd91bdf54db797485cb1ac6f2cb9)](https://app.codacy.com/app/axiaoxin/flask-skeleton?utm_source=github.com&utm_medium=referral&utm_content=axiaoxin/flask-skeleton&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/axiaoxin/flask-skeleton.svg?branch=master)](https://travis-ci.org/axiaoxin/flask-skeleton)
 ![version-badge](https://img.shields.io/github/release/axiaoxin/flask-skeleton.svg)
 ![downloads](https://img.shields.io/github/downloads/axiaoxin/flask-skeleton/total.svg)
