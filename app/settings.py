@@ -133,7 +133,7 @@ CELERY_TASK_RESULT_EXPIRES = config(
 CELERYD_TASK_SOFT_TIME_LIMIT = config(
     'CELERYD_TASK_SOFT_TIME_LIMIT', default=30, cast=int)
 CELERYD_MAX_TASKS_PER_CHILD = config(
-    'CELERYD_MAX_TASKS_PER_CHILD', default=10000, cast=int)
+    'CELERYD_MAX_TASKS_PER_CHILD', default=2000, cast=int)
 CELERYD_CONCURRENCY = config(
     'CELERYD_CONCURRENCY', default=cpu_count(), cast=int)
 CELERYD_SEND_EVENTS = config('CELERYD_SEND_EVENTS', default=True, cast=bool)
